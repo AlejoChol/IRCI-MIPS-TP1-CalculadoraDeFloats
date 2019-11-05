@@ -31,10 +31,17 @@ main:
 	li $v0, 2
 	syscall
 
+	la $a0, enter
+	li $v0, 4
+	syscall
+
 
 
 	lw $a0, 0($sp)
 	
+
+
+
 	jal sg
 
 	addi $sp, $sp, -4
@@ -61,7 +68,7 @@ main:
 
 	lw $a0, 8($sp)
 	
-	jal sg
+	jal mantisa
 
 	addi $sp, $sp, -4
 	sw $v0, 0($sp)
@@ -70,8 +77,10 @@ main:
 
 	jal print_basico
 
+####################
 	li $v0, 10
 	syscall
+####################
 
 
 
@@ -87,13 +96,13 @@ sg:
 	move $v0, $t0		#	x ... x y |hacemos un andi y conseguimos SOLO el signo 
 	
 	addi $sp, $sp, -4
-	sw $v0, 4($sp)
-	
+	sw $v0, 0($sp)
 
 	lw $a0, 8($sp)
 	lw $ra, 4($sp)
 	lw $v0, 0($sp)
 	addi $sp, $sp, 12
+
 
 	jr $ra
 
@@ -108,7 +117,7 @@ exponente:
 	move $v0, $t0		# ||_______|	|hacemos un andi y conseguimos SOLO el exponente
 	
 	addi $sp, $sp, -4
-	sw $v0, 4($sp)
+	sw $v0, 0($sp)
 
 
 	lw $a0, 8($sp)
@@ -129,7 +138,7 @@ mantisa:
 	move $v0, $t0		#
 
 	addi $sp, $sp, -4
-	sw $v0, 4($sp)
+	sw $v0, 0($sp)
 
 
 	lw $a0, 8($sp)
@@ -152,8 +161,8 @@ print_basico:
 	li $v0, 4
 	syscall
 
-	lw $a0, 0($sp)
 	lw $ra, 4($sp)
+	lw $a0, 0($sp)
 	addi $sp, $sp, 8
 	
 	jr $ra
