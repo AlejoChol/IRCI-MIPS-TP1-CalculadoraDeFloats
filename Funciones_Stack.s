@@ -35,6 +35,12 @@ main:
 	addi $sp, $sp, -4
 	sw $t0, 0($sp)
 
+	la $a0, msg_output1
+	li $v0, 4
+	syscall
+
+	lw $a0, ($t0)
+	jal print_string
 
 	lw $a0, 0($sp)
 	jal sg
