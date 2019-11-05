@@ -1,6 +1,7 @@
 .data
-float: .space 32
 enter: .asciiz "\n"
+.align 2
+float: .space 4
 
 .text
 
@@ -21,7 +22,8 @@ main:
 
 sg:
 	lw $t0, ($s0)
-	srl $a0, $t0, 31
+	srl $a0, $t0, 31	
+        andi $a0, $a0, 0x1
 	move $s1, $a0
 	li $v0, 1
 	syscall
@@ -33,8 +35,7 @@ sg:
 exponente:
 	lw $t0, ($s0)
 	srl $a0, $t0, 23
-	sll $a0, $a0, 1
-	srl $a0, $a0, 1
+        andi $a0, $a0, 0xff
 	move $s2, $a0
 	li $v0, 1
 	syscall
@@ -45,11 +46,9 @@ exponente:
 
 mantisa:
 	lw $t0, ($s0)
-	sll $a0, $t0, 9
-	srl $a0, $a0, 9
+        sll  $a0, $t0, 9
+        srl  $a0, $a0, 9
 	move $s3, $a0
 	li $v0, 1
 	syscall
 
-
-	
